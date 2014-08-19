@@ -212,7 +212,8 @@ public class ScoutManager {
 		sManagement.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Scout Management screen
+				//Start Scout Management screen
+				new ScoutManagement(frame);
 			}	
 		});
 				
