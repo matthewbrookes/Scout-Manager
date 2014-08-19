@@ -182,7 +182,8 @@ public class ScoutManager {
 		reports.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Reports screen
+				//Start Reports screen
+				new Reports(frame);
 			}	
 		});
 		
@@ -206,7 +207,7 @@ public class ScoutManager {
 		sManagement.setForeground(Color.WHITE);
 		sManagement.setFocusable(false);
 		
-		//When button is clicked start Reports screen
+		//When button is clicked start Scout Management screen
 		sManagement.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
