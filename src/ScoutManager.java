@@ -197,7 +197,8 @@ public class ScoutManager {
 		bManagement.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Badge Management screen
+				//Start Badge Management screen
+				new BadgeManagement(frame);
 			}	
 		});
 				
