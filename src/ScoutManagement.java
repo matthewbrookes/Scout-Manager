@@ -138,7 +138,7 @@ public class ScoutManagement {
 		addScout.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO Start Add scout screen
+				new AddScout(frame);
 			}	
 		});
 		

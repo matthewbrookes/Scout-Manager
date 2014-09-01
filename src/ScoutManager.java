@@ -74,7 +74,7 @@ public class ScoutManager {
 	 * If encounters a problem then quits system
 	 * @return Connection The SQLite connection to the database
 	 */
-	private static Connection connectToDB(){
+	public static Connection connectToDB(){
 		try {
 		    Class.forName("org.sqlite.JDBC");
 		    Connection db = DriverManager.getConnection("jdbc:sqlite:system.db");
