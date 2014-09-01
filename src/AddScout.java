@@ -247,6 +247,23 @@ public class AddScout {
 								line3Field.getText()+"', '"+line4Field.getText()+"', '" +
 								patrolBox.getSelectedItem() +"');";
 						stmt.executeUpdate(sql);
+						
+						//Create a new table for the scout
+						sql = "CREATE TABLE '" + nameField.getText().toUpperCase() + "'(" +
+								"'BADGE NAME'		VARCHAR(20)		NOT NULL, " +
+								"'REQUIREMENT 1'	VARCHAR(10)				, " +
+								"'REQUIREMENT 2'	VARCHAR(10)				, " +
+								"'REQUIREMENT 3'	VARCHAR(10)				, " +
+								"'REQUIREMENT 4'	VARCHAR(10)				, " +
+								"'REQUIREMENT 5'	VARCHAR(10)				, " +
+								"'REQUIREMENT 6'	VARCHAR(10)				, " +
+								"'REQUIREMENT 7'	VARCHAR(10)				, " +
+								"'REQUIREMENT 8'	VARCHAR(10)				, " +
+								"'REQUIREMENT 9'	VARCHAR(10)				, " +
+								"'REQUIREMENT 10'	VARCHAR(10)				, " +
+								"'DATE AWARDED'		VARCHAR(10)				, " +
+								"'DATE PRESENTED'	VARCHAR(10))";
+						stmt.executeUpdate(sql);
 						stmt.close();
 						db.close();
 					} catch (SQLException e1) {
