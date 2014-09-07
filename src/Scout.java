@@ -1,4 +1,4 @@
-import java.text.DateFormat;
+
 
 /**
  * This class represents a record in the Scouts table from the database
@@ -9,8 +9,8 @@ public class Scout {
 	private String name;
 	private String email;
 	private String phone;
-	private DateFormat dob;
-	private DateFormat dateJoined;
+	private String dob;
+	private String dateJoined;
 	private String[] address = new String[4];
 	private String patrol;
 	
@@ -70,16 +70,16 @@ public class Scout {
 	
 	/**
 	 * Returns the DOB of the scout
-	 * @return DateFormat The Date of Birth
+	 * @return String The Date of Birth
 	 */
-	public DateFormat getDob() {
+	public String getDob() {
 		return dob;
 	}
 	/**
 	 * Sets the DOB of the scout
 	 * @param dob The Date of Birth to set
 	 */
-	public void setDob(DateFormat dob) {
+	public void setDob(String dob) {
 		this.dob = dob;
 	}
 
@@ -88,14 +88,14 @@ public class Scout {
 	 * Returns the date the scout joined
 	 * @return String The date joined
 	 */
-	public DateFormat getDateJoined() {
+	public String getDateJoined() {
 		return dateJoined;
 	}
 	/**
 	 * Sets the date the scout joined
 	 * @param dateJoined The date the scout joined
 	 */
-	public void setDateJoined(DateFormat dateJoined) {
+	public void setDateJoined(String dateJoined) {
 		this.dateJoined = dateJoined;
 	}
 

@@ -40,7 +40,7 @@ public class AddScout {
 	 * The class' only constructor has a JFrame as an argument which
 	 * is passed from the home screen. On this frame the form is drawn
 	 * as well as labels directing the user on what data is required.
-	 * The back button will be directed towards the Badge Management screen.
+	 * The back button will be directed towards the Scout Management screen.
 	 * @param frame The screen where buttons will be drawn
 	 */
 	public AddScout(JFrame frame) {
@@ -236,6 +236,7 @@ public class AddScout {
 							db.close();
 							return;
 						}
+						stmt.close();
 						//Add new scout to db as it doesn't exist
 						sql = "INSERT INTO SCOUTS (NAME, 'EMAIL ADDRESS', " +
 								"'PHONE NUMBER', DOB, 'DATE JOINED', ADDRESS1, " +
@@ -247,7 +248,7 @@ public class AddScout {
 								line3Field.getText()+"', '"+line4Field.getText()+"', '" +
 								patrolBox.getSelectedItem() +"');";
 						stmt.executeUpdate(sql);
-						
+						stmt.close();
 						//Create a new table for the scout
 						sql = "CREATE TABLE '" + nameField.getText().toUpperCase() + "'(" +
 								"'BADGE NAME'		VARCHAR(20)		NOT NULL, " +
@@ -266,6 +267,8 @@ public class AddScout {
 						stmt.executeUpdate(sql);
 						stmt.close();
 						db.close();
+						//Restart screen
+						new AddScout(frame);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

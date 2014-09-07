@@ -152,7 +152,7 @@ public class ScoutManagement {
 		updateScout.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Update scout screen
+				new UpdateScout(frame);
 			}	
 		});
 				
