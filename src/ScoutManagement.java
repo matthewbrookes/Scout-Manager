@@ -166,7 +166,7 @@ public class ScoutManagement {
 		deleteScout.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Delete scout screen
+				new DeleteScout(frame);
 			}	
 		});
 				
