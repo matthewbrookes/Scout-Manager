@@ -152,7 +152,7 @@ public class BadgeManagement {
 		updateBadge.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Update badge screen
+				new UpdateBadge(frame);
 			}	
 		});
 				

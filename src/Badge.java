@@ -5,7 +5,7 @@
 public class Badge {
 	//Declare variables which will be used in class
 	private String name;
-	private byte requirementsNeeded;
+	private int requirementsNeeded;
 	private String[] requirements = new String[10];
 	/**
 	 * Empty constructor as the variables will all be assigned 
@@ -32,16 +32,16 @@ public class Badge {
 	
 	/**
 	 * Returns the number of requirements needed to achieve badge
-	 * @return byte The number of requirements needed to achieve badge
+	 * @return int The number of requirements needed to achieve badge
 	 */
-	public byte getRequirementsNeeded() {
+	public int getRequirementsNeeded() {
 		return requirementsNeeded;
 	}
 	/**
 	 * Sets the number of requirements needed to achieve badge
 	 * @param requirementsNeeded The number of requirements needed to achieve badge
 	 */
-	public void setRequirementsNeeded(byte requirementsNeeded) {
+	public void setRequirementsNeeded(int requirementsNeeded) {
 		this.requirementsNeeded = requirementsNeeded;
 	}
 	
