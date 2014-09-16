@@ -138,7 +138,7 @@ public class BadgeManagement {
 		addBadge.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO Start Add badge screen
+				new AddBadge(frame);
 			}	
 		});
 		

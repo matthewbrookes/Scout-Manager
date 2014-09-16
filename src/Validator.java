@@ -158,4 +158,58 @@ public class Validator {
 		}
 		return true;
 	}
+	
+	/**
+	 * This method returns true if the badge name passed is valid
+	 * i.e. contains only alpha characters and is less than 21
+	 * characters.
+	 * @param name The name of the badge
+	 * @return boolean True if name is valid else returns false
+	 */
+	public boolean isValidBadgeName(String name){
+		for(char c: name.toCharArray()){
+			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)){
+				JOptionPane.showMessageDialog(frame,
+						"The badge name must contain only letters and spaces",
+						"Name error",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		if(name.length() > 20 || name.length() < 1){
+		JOptionPane.showMessageDialog(frame,
+				"The badge name must contain 1-20 characters",
+				"Name error",
+				JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * This method returns true if the requirement is valid
+	 * i.e. it contains less than 201 characters and is alphanumeric
+	 * @param requirement The requirement to be validated
+	 * @return boolean True if the requirement is valid else returns false
+	 */
+	public boolean isValidRequirement(String requirement){
+		if(requirement.length() > 200){
+			JOptionPane.showMessageDialog(frame,
+					"Requirement must be less than 201 characters",
+					"Requirement error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		for(char c: requirement.toCharArray()){
+			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)
+					&& !Character.isDigit(c)){
+				JOptionPane.showMessageDialog(frame,
+						"The address line must contain only letters, numbers or spaces",
+						"Name error",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		return true;
+	}
 }
