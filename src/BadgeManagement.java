@@ -166,7 +166,7 @@ public class BadgeManagement {
 		deleteBadge.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Delete badge screen
+				new DeleteBadge(frame);
 			}	
 		});
 				
