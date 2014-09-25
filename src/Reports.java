@@ -139,7 +139,7 @@ public class Reports {
 		ecs.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Emergency Contact screen
+				new EmergencyContactSheet(frame);
 			}	
 		});
 		
