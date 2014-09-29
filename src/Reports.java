@@ -167,7 +167,7 @@ public class Reports {
 		emailAddresses.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Email Addresses screen
+				new EmailAddresses(frame);
 			}	
 		});
 		

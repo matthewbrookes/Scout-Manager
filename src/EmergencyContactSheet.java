@@ -36,10 +36,9 @@ import javax.swing.table.TableCellRenderer;
 
 /**
 * The class' only constructor has a JFrame as an argument which
-* is passed from the home screen. On this frame the three buttons
-* are drawn to replace those from the home screen and the back
-* button is linked to the home screen.
-* @param frame The screen where buttons will be drawn
+* is passed from the report screen. On this frame the details for
+* the scouts are displayed in a table along with a print button.
+* @param frame The screen where table will be drawn
 */
 public class EmergencyContactSheet{
 	
@@ -52,8 +51,8 @@ public class EmergencyContactSheet{
 		frame.setVisible(true);
 	}
 	/**
-	 * This method draws the header and body of the scout
-	 * management screen on the frame which is passed
+	 * This method draws the header and body of the emergency contact 
+	 * sheet screen on the frame which is passed
 	 * @param frame The current window
 	 */
 	private static void drawScreen(final JFrame frame){
