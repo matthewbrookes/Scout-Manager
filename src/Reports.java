@@ -58,7 +58,8 @@ public class Reports {
 		header.setLayout(headerLayout);
 		Box box = Box.createHorizontalBox();
 		
-		header.setBackground(new Color(139,0,102)); //Set purple color to background
+		//Set purple color to background
+		header.setBackground(new Color(139,0,102)); 
 		//Create home and back buttons
 		ImageIcon back = new ImageIcon("./res/back.png");
 		JLabel backButton = new JLabel(back);
@@ -129,7 +130,8 @@ public class Reports {
 		body.setBorder(new EmptyBorder(20,20,80,80));
 		
 		//Create buttons
-		JButton ecs = new JButton("<html><center>Emergency Contact Sheet</center></html>");
+		JButton ecs = new JButton("<html>" +
+				"<center>Emergency Contact Sheet</center></html>");
 		ecs.setFont(new Font("Calibri",Font.PLAIN,20));
 		ecs.setForeground(Color.WHITE);
 		ecs.setBackground(new Color(79,129,189));
@@ -153,11 +155,12 @@ public class Reports {
 		register.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Register screen
+				new Register(frame);
 			}	
 		});
 				
-		JButton emailAddresses = new JButton("<html><center>Email Addresses</center></html>");
+		JButton emailAddresses = new JButton("<html>" +
+				"<center>Email Addresses</center></html>");
 		emailAddresses.setBackground(new Color(79,129,189));
 		emailAddresses.setFont(new Font("Calibri",Font.PLAIN,20));
 		emailAddresses.setForeground(Color.WHITE);
