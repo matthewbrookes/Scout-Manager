@@ -184,7 +184,7 @@ public class Reports {
 		badges.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Badges screen
+				new Badges(frame);
 			}	
 		});
 		
