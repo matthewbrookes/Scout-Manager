@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +13,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -29,7 +24,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -47,22 +41,23 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- * This screen will first display a list of badges in the
- * database which can be selected. The badges can be selected
- * and then each scout's progress towards the badge is displayed 
- * so that it can be edited and changes saved back into the database.
+ * This screen will first display a list of scouts in the
+ * database which can be selected. The scout can be selected
+ * and then the date the scout was awarded and presented each badge 
+ * is displayed so that it can be edited and changes saved 
+ * back into the database.
  * @author Matthew Brookes
  */
-public class Badges {
+public class Scouts {
 	/**
 	 * The class' only constructor has a JFrame as an argument which
-	 * is passed from the previous screen. On this frame the badge names
+	 * is passed from the previous screen. On this frame the scout names
 	 * are displayed then the table for progress is displayed.
 	 * The back button will be directed towards the Report screen.
 	 * @param frame The screen where buttons will be drawn
 	 */
-	public Badges(JFrame frame){
-		System.out.println("Badges");
+	public Scouts(JFrame frame){
+		System.out.println("Scouts");
 		Container pane = frame.getContentPane();
 		pane.removeAll();
 		pane.repaint();
@@ -72,7 +67,7 @@ public class Badges {
 	
 	/**
 	 * This function draws the first screen the user sees when this
-	 * section is started. It consists of the names of all badges
+	 * section is started. It consists of the names of all scouts
 	 * in the database in two columns which are ordered by name.
 	 * Each name acts as a hyperlink to the main section where details
 	 * can be updated.
@@ -135,7 +130,7 @@ public class Badges {
 		box.add(homeButton);
 		
 		//Add title
-		JLabel title = new JLabel("BADGES");
+		JLabel title = new JLabel("SCOUTS");
 		title.setFont(new Font("Verdana",Font.PLAIN, 40));
 		title.setForeground(new Color(237,119,3));
 		box.add(Box.createHorizontalGlue());
@@ -164,12 +159,12 @@ public class Badges {
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		Connection db = ScoutManager.connectToDB();
-		//Holds all badge names
+		//Holds all scout names
 		ArrayList<String> namesInDb = new ArrayList<String>();
 		try {
-			//Retrieve all badges from db
+			//Retrieve all scouts from db
 			Statement stmt = db.createStatement();
-			String sql = "SELECT NAME FROM BADGES";
+			String sql = "SELECT NAME FROM SCOUTS";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				//Foreach badge add to array
@@ -191,11 +186,11 @@ public class Badges {
 	    });
 		
 		for(final String name: namesInDb){
-			//Foreach badge in database draw a label
+			//Foreach scout in database draw a label
 			JLabel nameLabel = new JLabel(name);
 			nameLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
 			nameLabel.setHorizontalAlignment(JLabel.CENTER);
-			//If label clicked then show data for that badge
+			//If label clicked then show data for that scout
 			nameLabel.addMouseListener(new MouseListener(){
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -225,14 +220,14 @@ public class Badges {
 	
 	/**
 	 * This method changes the layout of the screen to show a table
-	 * with the dates that scouts achieved requirements
-	 * for the badges and the user has an opportunity to make 
+	 * with the dates that the scout was awarded and presented the badge
+	 * and the user has an opportunity to make 
 	 * changes which will be stored in the database.
 	 * @param frame The screen where the layout will be drawn
-	 * @param badgeName The name of the badge to be updated
+	 * @param scoutName The name of the scout to be updated
 	 */
 	private static void drawProgressTable(
-			final JFrame frame, final String badgeName){
+			final JFrame frame, final String scoutName){
 		Container pane = frame.getContentPane();
 		pane.removeAll();
 		pane.repaint();
@@ -292,7 +287,7 @@ public class Badges {
 		box.add(homeButton);
 		
 		//Add title
-		JLabel title = new JLabel(badgeName.toUpperCase());
+		JLabel title = new JLabel(scoutName.toUpperCase());
 		title.setFont(new Font("Verdana",Font.PLAIN, 30));
 		title.setForeground(new Color(237,119,3));
 		title.setPreferredSize(new Dimension(400, 100));
@@ -313,48 +308,16 @@ public class Badges {
 		pane.add(header, BorderLayout.NORTH); //Add header to main screen
 		
 		Connection db = ScoutManager.connectToDB();
-		// Will hold the data about the badge
-		final Badge badge = new Badge(); 
-		
-		try {
-			// Retrieve existing information from database
-			Statement stmt = db.createStatement();
-			String sql = "SELECT * FROM BADGES WHERE NAME=\"" + 
-					badgeName + "\"";
-			ResultSet rs = stmt.executeQuery(sql); 
-			while(rs.next()){
-				// Store information in badge object
-				badge.setName(badgeName);
-				badge.setRequirementsNeeded(rs.getByte(2));
-				String[] requirements = new String[10];
-				requirements[0] = rs.getString(3);
-				requirements[1] = rs.getString(4);
-				requirements[2] = rs.getString(5);
-				requirements[3] = rs.getString(6);
-				requirements[4] = rs.getString(7);
-				requirements[5] = rs.getString(8);
-				requirements[6] = rs.getString(9);
-				requirements[7] = rs.getString(10);
-				requirements[8] = rs.getString(11);
-				requirements[9] = rs.getString(12);
-				badge.setRequirements(requirements);
-			}
-			// Tidy up connections
-			stmt.close();
-			db.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
 		db = ScoutManager.connectToDB();
-		//Holds all scout names
+		//Holds all badge names
 		final ArrayList<String> namesInDb = new ArrayList<String>(); 
 		try {
-			//Retrieve all scouts from db
+			//Retrieve all badges from db
 			Statement stmt = db.createStatement();
-			String sql = "SELECT NAME FROM SCOUTS";
+			String sql = "SELECT NAME FROM BADGES";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				//Foreach scout add to array
+				//Foreach badge add to array
 				namesInDb.add((String) rs.getObject(1));
 			}
 			//Close connections
@@ -375,29 +338,28 @@ public class Badges {
 		db = ScoutManager.connectToDB();
 		//Array will hold the unfiltered data from db
 		final Object[][] originalData = new Object[namesInDb.size()]
-				[badge.getRequirements().length + 1];
-		for(String scoutName : namesInDb){
+				[3];
+		for(String badgeName : namesInDb){
 			try {
 				//Retrieve progress data from db
 				Statement stmt = db.createStatement();
-				Object[] progress = new Object[
-				                    badge.getRequirements().length + 1];
-				progress[0] = scoutName;
-				//Initialise rest of array with blank strings
-				for(int i=1; i<= badge.getRequirements().length; i++){
-					progress[i] = "";
-				}
+				Object[] progress = new Object[3];
+				progress[0] = badgeName;
 				
-				String sql = "SELECT * FROM '" + scoutName + "' " +
+				//Initialise rest of array with blank strings
+				progress[1] = "";
+				progress[2] = "";
+				
+				String sql = "SELECT \"DATE AWARDED\",\"DATE PRESENTED\""+
+						" FROM '" + scoutName + "' " +
 						"WHERE \"BADGE NAME\"='" + badgeName + "'";
 				ResultSet rs = stmt.executeQuery(sql);
 				while(rs.next()){
-					//Foreach date add to array
-					for(int i=1; i<= badge.getRequirements().length; i++){
-						progress[i] = rs.getString(i+1); 
-					}
+					//Add dates to array
+					progress[1] = rs.getObject(1);
+					progress[2] = rs.getObject(2);
 				}
-				originalData[namesInDb.indexOf(scoutName)] = progress;
+				originalData[namesInDb.indexOf(badgeName)] = progress;
 				//Close connections
 				stmt.close();
 			} catch (SQLException e1) {
@@ -419,16 +381,17 @@ public class Badges {
 				
 		//Create radio buttons for filter options
 		JRadioButton showAllButton = new JRadioButton(
-				"Show all scouts");
+				"Show all badges");
 		showAllButton.setSelected(true);
 		showAllButton.setBackground(Color.white);
-		JRadioButton showCompletedButton = new JRadioButton(
-				"Show scouts who have completed badge");
-		showCompletedButton.setBackground(Color.white);
-		JRadioButton showUncompletedButton = new JRadioButton(
-				"Show scouts who have not completed badge");
-		showUncompletedButton.setBackground(Color.white);
+		JRadioButton showUnpresentedButton = new JRadioButton(
+				"Show badges which have not been presented");
+		showUnpresentedButton.setBackground(Color.white);
+		JRadioButton showUnawardedButton = new JRadioButton(
+				"Show badges who have not been awarded");
+		showUnawardedButton.setBackground(Color.white);
 		frame.setVisible(true);
+		
 		
 		//Create row filters for each option
 		final RowFilter<Object, Object> showAllFilter = 
@@ -440,75 +403,57 @@ public class Badges {
 				return true;
 			}
 		};
-		final RowFilter<Object, Object> showCompletedFilter = 
+		final RowFilter<Object, Object> showUnpresentedFilter = 
 				new RowFilter<Object, Object>(){
 			@Override
 			public boolean include(
 					Entry<? extends Object, ? extends Object> entry) {
-				//Iterate through each scout name
+				//Iterate through each badge name
 				for (int i = entry.getValueCount() - 1; i >= 0; i--) {
 					String scoutName = entry.getStringValue(i);
 					for(int j=0; j<namesInDb.size(); j++){
-						//Find scout in the array
+						//Find badge in the array
 						if(((String)originalData[j][0])
 								.equals(scoutName)){
-							//If found the scout in array
-							//Number of requirements completed
-							int counter = 0; 
-							for(int k=1; k<originalData[j].length - 1; 
-																	k++){
-								//Iterate over each date
-								if(originalData[j][k] == null ||
-										!((String)originalData[j][k])
-														.isEmpty()){
-									//If requirement has been met
-									counter += 1; //Increment counter
-								}
-							}
-							if(counter >= badge.getRequirementsNeeded()){
-								//Show scout if achieved enough 
+							//If found the badge in array
+							if(originalData[j][2] == null 
+								||((String)originalData[j][2]).isEmpty()){
+								//If not presented return true
 								return true;
+							}
+							else{
+								return false;
 							}
 						}
 					}
 				}
-				//If not achieved enough requirements, don't show name
 				return false;
 			}	
 		};
-		final RowFilter<Object, Object> showUncompletedFilter = 
+		final RowFilter<Object, Object> showUnawardedFilter = 
 				new RowFilter<Object, Object>(){
 			@Override
 			public boolean include(
 					Entry<? extends Object, ? extends Object> entry) {
-				//Iterate through each scout name
+				//Iterate through each badge name
 				for (int i = entry.getValueCount() - 1; i >= 0; i--) {
-					String scoutName = entry.getStringValue(i);
+					String badgeName = entry.getStringValue(i);
 					for(int j=0; j<namesInDb.size(); j++){
-						//Find scout in the array
+						//Find badge in the array
 						if(((String)originalData[j][0])
-								.equals(scoutName)){
-							//If found the scout in array
-							//Number of requirements completed
-							int counter = 0; 
-							for(int k=1; k<originalData[j].length - 1; 
-																	k++){
-								//Iterate over each date
-								if(originalData[j][k] == null || 
-										!((String)originalData[j][k])
-														.isEmpty()){
-									//If requirement has been met
-									counter += 1; //Increment counter
-								}
-							}
-							if(counter < badge.getRequirementsNeeded()){
-								//Show scout if not achieved enough 
+								.equals(badgeName)){
+							//If found the badge in array
+							if(originalData[j][1] == null 
+								||((String)originalData[j][1]).isEmpty()){
+								//If not awarded return true
 								return true;
+							}
+							else{
+								return false;
 							}
 						}
 					}
 				}
-				//If achieved enough requirements, don't show name
 				return false;
 			}
 		};
@@ -516,22 +461,17 @@ public class Badges {
 		//Group buttons so only one can be selected at a time
 		ButtonGroup group = new ButtonGroup();
 		group.add(showAllButton);
-		group.add(showCompletedButton);
-		group.add(showUncompletedButton);
+		group.add(showUnpresentedButton);
+		group.add(showUnawardedButton);
 		
 		//Add buttons to the body
 		body.add(showAllButton);
-		body.add(showCompletedButton);
-		body.add(showUncompletedButton);
+		body.add(showUnpresentedButton);
+		body.add(showUnawardedButton);
 		
 		//Create array of column names
-		Object[] columnNames = new Object[
-	                                  badge.getRequirements().length + 1];
-		columnNames[0] = "Name";
-		for(int i=1; i<=badge.getRequirements().length; i++){
-			//Add each requirement as a column name
-			columnNames[i] = badge.getRequirements()[i-1];
-		}
+		Object[] columnNames = new Object[]{"Badge", "Date Awarded",
+											"Date Presented"};
 		
 		//Create table to display information
 		TableModel model = new DefaultTableModel(originalData, 
@@ -593,12 +533,10 @@ public class Badges {
 		}
 		
 		//Set custom editor to each date column
-		for(int i=1; i <= badge.getRequirements().length; i++){
+		for(int i=1; i <= 2; i++){
 			table.getColumnModel().getColumn(i).setCellEditor(
 					new DateCellEditor());
 		}
-		//Turn off auto sizing
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		//Create table sorter for filter
 		final TableRowSorter<TableModel> sorter = 
@@ -613,16 +551,16 @@ public class Badges {
 				sorter.setRowFilter(showAllFilter);	
 			}
 		});
-		showCompletedButton.addActionListener(new ActionListener(){
+		showUnpresentedButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				sorter.setRowFilter(showCompletedFilter);	
+				sorter.setRowFilter(showUnpresentedFilter);	
 			}
 		});
-		showUncompletedButton.addActionListener(new ActionListener(){
+		showUnawardedButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				sorter.setRowFilter(showUncompletedFilter);	
+				sorter.setRowFilter(showUnawardedFilter);	
 			}
 		});
 		
@@ -689,8 +627,8 @@ public class Badges {
 			    	//Set to true if badge exists
 			    	boolean existsFlag = false; 
 			    	String sql = "SELECT \"BADGE NAME\" FROM '" 
-			    			+ tableData[i][0] + "' WHERE \"BADGE NAME\"" +
-			    					" = '" + badge.getName() + "'";
+			    			+ scoutName + "' WHERE \"BADGE NAME\"" +
+			    					" = '" + tableData[i][0] + "'";
 			    	try { 
 			    		//Check to see if the badge already has a record
 						Statement stmt = db.createStatement();
@@ -701,17 +639,12 @@ public class Badges {
 						}
 						if(existsFlag){
 							//Generate the sql code required to update db
-							sql = "UPDATE '" + tableData[i][0] + "' SET ";
-	
-					    	for(int j=1; j<=badge.getRequirements()
-					    					.length; j++){
-					    		//Foreach requirement update the record
-					    		sql += "'REQUIREMENT " + j + "' = ";
-					    		sql += "'" + tableData[i][j] +"', " ;
-					    	}
-					    	sql = sql.substring(0, sql.length()-2);
-					    	sql += "WHERE \"BADGE NAME\" = '" + 
-					    				badge.getName() + "'";
+							sql = "UPDATE '" + scoutName + "' SET " +
+							"\"DATE AWARDED\" = '" + tableData[i][1] +
+							"', \"DATE PRESENTED\" = '" + tableData[i][2]
+							+"' " + "WHERE \"BADGE NAME\" = '" + 
+		    				tableData[i][0] + "'";
+							
 					    	sql = sql.replaceAll("'null'", "''");
 					    	//Execute the sql command to update the db
 					    	stmt.executeUpdate(sql);
@@ -719,22 +652,13 @@ public class Badges {
 						}
 						else{
 							//Insert new badge record
-							sql = "INSERT INTO '" + tableData[i][0] +"'("+
-					    			"'BADGE NAME', 'REQUIREMENT 1', " +
-					    			"'REQUIREMENT 2'," +
-					    			" 'REQUIREMENT 3', 'REQUIREMENT 4'," +
-					    			" 'REQUIREMENT 5', 'REQUIREMENT 6'," +
-					    			" 'REQUIREMENT 7', 'REQUIREMENT 8'," +
-					    			" 'REQUIREMENT 9', 'REQUIREMENT 10'" +
-					    			") " +
-					    			"VALUES('" + badge.getName() + "', ";
+							sql = "INSERT INTO '" + scoutName +"'("+
+					    			"'BADGE NAME', 'DATE AWARDED', " +
+					    			"'DATE PRESENTED')" +
+					    			"VALUES('" + tableData[i][0] + "', " +
+					    			"'" + tableData[i][1] + "', " +
+					    			"'" + tableData[i][2] + "')";
 					    	
-					    	for(int j=1; j<=badge.
-					    				getRequirements().length;j++){
-					    		sql += "'" + tableData[i][j] +"', " ;
-					    	}
-					    	sql = sql.substring(0, sql.length()-2);
-					    	sql += ")";
 					    	sql = sql.replaceAll("'null'", "''");
 					    	//Execute the sql command to update the db
 					    	stmt.executeUpdate(sql);
@@ -743,88 +667,7 @@ public class Badges {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-			    	
-			    	//Set date awarded for anybody who completes badge
-			    	final String scoutName = (String) tableData[i][0];
-			    	int counter = 0; //Number of requirements completed
-					for(int j=1; j<badge.getRequirements().length; j++){
-						//Iterate over each date
-						if(!((String)tableData[i][j]).isEmpty()){
-							//If requirement has been met
-							counter += 1; //Increment counter
-						}
-					}
-					//Date badge was first achieved
-			        String dateAchieved = "";
-					if(counter >= badge.getRequirementsNeeded()){
-						/*
-						 * If enough requirements have been met for the 
-						 * badge to be awarded and no date awarded 
-						 * currently exists in the database then the 
-						 * current date will be stored as the data 
-						 * awarded for this badge.
-						 */
-						DateFormat formatter = new SimpleDateFormat(
-								"dd/MM/yyyy");
-						Date date = Calendar.getInstance().getTime();
-				        String today = formatter.format(date);
-				        
-				        sql = "SELECT \"DATE AWARDED\" FROM '" +scoutName+
-				        		"' WHERE \"BADGE NAME\"='"+
-				        		badge.getName()+ "'";
-				        
-				        try{
-				        	Statement stmt = db.createStatement();
-				        	ResultSet rs = stmt.executeQuery(sql);
-				        	while(rs.next()){
-				        		dateAchieved = rs.getString(1);
-				        	}
-				        	stmt.close();
-				        } catch (SQLException e) {
-							e.printStackTrace();
-						}
-				        if(dateAchieved == null){
-				        	//If this is date when badge is achieved
-				        	//make changes in the db
-							sql = "Update '" + scoutName + "' SET" +
-									"\"DATE AWARDED\" = COALESCE(\"" +
-									"DATE AWARDED\",'" + today + "')" +
-									"WHERE \"BADGE NAME\"=\"" + 
-									badge.getName() + "\"";
-							try {
-								Statement stmt = db.createStatement();
-								stmt.executeUpdate(sql);
-								stmt.close();
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-							//Inform user that scout has achieved badge
-							EventQueue.invokeLater(new Runnable(){
-		                        @Override
-		                        public void run() {
-		                        	 //Create popup for each scout
-				                     JOptionPane op = new JOptionPane(
-				                    		 scoutName+
-				                    		 " has achieved " + 
-		                    				 badge.getName(),
-				                    		 JOptionPane.
-				                    		 	INFORMATION_MESSAGE);
-				                     JDialog dialog = op.createDialog("");
-				                     dialog.setAlwaysOnTop(true);
-				                     dialog.setModal(true);
-				                     dialog.setDefaultCloseOperation(
-			                    		 JDialog.DISPOSE_ON_CLOSE);      
-				                     dialog.setVisible(true);
-		                        }
-		                    });
-				        }
-					}
 			    }
-				try {
-					db.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
 		});
 		

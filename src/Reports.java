@@ -198,7 +198,7 @@ public class Reports {
 		scouts.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Start Scouts screen
+				new Scouts(frame);
 			}	
 		});
 				
