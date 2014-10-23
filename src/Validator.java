@@ -53,9 +53,12 @@ public class Validator {
 	 * @return boolean True if email address is valid else returns false
 	 */
 	public boolean isValidEmail(String email){
-		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}" +
-				"\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+" +
+				"@((\\[[0-9]{1,3}\\.[0-9]{1,3}" +
+				"\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|" +
+				"(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+		java.util.regex.Pattern p = java.util.regex.Pattern.
+											compile(ePattern);
 		java.util.regex.Matcher m = p.matcher(email);
 		if(!m.matches()){
 			JOptionPane.showMessageDialog(frame,
@@ -100,7 +103,8 @@ public class Validator {
 	 * @return boolean True if date is valid else returns false
 	 */
 	public boolean isValidDate(String date){
-		String pattern = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$";
+		String pattern = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-]" +
+				"(0?[1-9]|1[012])[\\/\\-]\\d{4}$";
 		if(!date.matches(pattern)){
 			JOptionPane.showMessageDialog(frame,
 					"Dates must be in the format DD/MM/YYYY",
@@ -129,7 +133,8 @@ public class Validator {
 			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)
 					&& !Character.isDigit(c)){
 				JOptionPane.showMessageDialog(frame,
-						"The address line must contain only letters, numbers or spaces",
+						"The address line must contain only letters, " +
+						"numbers or spaces",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
@@ -170,7 +175,8 @@ public class Validator {
 		for(char c: name.toCharArray()){
 			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)){
 				JOptionPane.showMessageDialog(frame,
-						"The badge name must contain only letters and spaces",
+						"The badge name must contain only letters " +
+						"and spaces",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
@@ -204,7 +210,8 @@ public class Validator {
 			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)
 					&& !Character.isDigit(c)){
 				JOptionPane.showMessageDialog(frame,
-						"The address line must contain only letters, numbers or spaces",
+						"The requirement field must contain only " +
+						"letters, numbers or spaces",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
