@@ -176,7 +176,7 @@ public class DeleteBadge {
 					//Get confirmation from user
 					int confirm = JOptionPane.showConfirmDialog(
 						    frame,
-						    "Would you like to delete " + name + "?",
+						    "Are you sure you want to delete " + name + "?",
 						    "Confirm delete",
 						    JOptionPane.YES_NO_OPTION);
 					if(confirm == JOptionPane.OK_OPTION){

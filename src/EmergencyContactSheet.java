@@ -189,10 +189,17 @@ public class EmergencyContactSheet{
 				//Put scout data in row object
 				row[1] = rs.getObject(1) ;
 				
-				String address = rs.getString(2) + "\n" +
-						rs.getString(3) + "\n" +
-						rs.getString(4) + "\n" +
-						rs.getString(5);
+				//Add address from database
+				String address = "";
+				for(int i=2; i<6; i++){ //Iterate over each line of address
+					if(!rs.getString(i).isEmpty()){ //If string isn't empty
+						//Add with comma and line break
+						address += rs.getString(i) + ",\n"; 
+					}
+					else{
+						address += "\n"; //Just add line break
+					}
+				}
 				
 				row[2] = address;
 				row[3] = rs.getString(6) ;

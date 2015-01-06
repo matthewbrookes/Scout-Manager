@@ -388,7 +388,7 @@ public class Scouts {
 				"Show badges which have not been presented");
 		showUnpresentedButton.setBackground(Color.white);
 		JRadioButton showUnawardedButton = new JRadioButton(
-				"Show badges who have not been awarded");
+				"Show badges which have not been awarded");
 		showUnawardedButton.setBackground(Color.white);
 		frame.setVisible(true);
 		

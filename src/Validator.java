@@ -29,15 +29,22 @@ public class Validator {
 		for(char c: name.toCharArray()){
 			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)){
 				JOptionPane.showMessageDialog(frame,
-						"The name must contain only letters and spaces",
+						"Name must only contain letters",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		}
-		if(name.length() > 40 || name.length() < 1){
+		if(name.length() > 40){
+			JOptionPane.showMessageDialog(frame,
+					"Name entered exceeds 40 characters",
+					"Name error",
+					JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		if(name.length() < 1){
 		JOptionPane.showMessageDialog(frame,
-				"The name must contain 1-40 characters",
+				"Name required",
 				"Name error",
 				JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -53,6 +60,13 @@ public class Validator {
 	 * @return boolean True if email address is valid else returns false
 	 */
 	public boolean isValidEmail(String email){
+		if(email.length() < 1){
+			JOptionPane.showMessageDialog(frame,
+					"Email required",
+					"Email error",
+					JOptionPane.ERROR_MESSAGE);
+				return false;
+		}
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+" +
 				"@((\\[[0-9]{1,3}\\.[0-9]{1,3}" +
 				"\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|" +
@@ -107,7 +121,7 @@ public class Validator {
 				"(0?[1-9]|1[012])[\\/\\-]\\d{4}$";
 		if(!date.matches(pattern)){
 			JOptionPane.showMessageDialog(frame,
-					"Dates must be in the format DD/MM/YYYY",
+					"Date must be in the format DD/MM/YYYY",
 					"Date error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -133,8 +147,7 @@ public class Validator {
 			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)
 					&& !Character.isDigit(c)){
 				JOptionPane.showMessageDialog(frame,
-						"The address line must contain only letters, " +
-						"numbers or spaces",
+						"Address must only contain letters and numbers",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
@@ -174,17 +187,24 @@ public class Validator {
 	public boolean isValidBadgeName(String name){
 		for(char c: name.toCharArray()){
 			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)){
+				//If is non alpha display error message
 				JOptionPane.showMessageDialog(frame,
-						"The badge name must contain only letters " +
-						"and spaces",
+						"Name must only contain letters",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		}
-		if(name.length() > 20 || name.length() < 1){
+		if(name.length() < 1){ //If the name field is empty
+			JOptionPane.showMessageDialog(frame,
+					"Name required",
+					"Name error",
+					JOptionPane.ERROR_MESSAGE);
+				return false;
+		}
+		else if(name.length() > 20){ //If name is too long
 		JOptionPane.showMessageDialog(frame,
-				"The badge name must contain 1-20 characters",
+				"Name entered exceeds 20 characters",
 				"Name error",
 				JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -194,7 +214,7 @@ public class Validator {
 	
 	/**
 	 * This method returns true if the requirement is valid
-	 * i.e. it contains less than 201 characters and is alphanumeric
+	 * i.e. it contains less than 201 characters and is alpha
 	 * @param requirement The requirement to be validated
 	 * @return boolean True if the requirement is valid else returns false
 	 */
@@ -207,11 +227,9 @@ public class Validator {
 			return false;
 		}
 		for(char c: requirement.toCharArray()){
-			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)
-					&& !Character.isDigit(c)){
+			if(!Character.isAlphabetic(c) && !Character.isWhitespace(c)){
 				JOptionPane.showMessageDialog(frame,
-						"The requirement field must contain only " +
-						"letters, numbers or spaces",
+						"Requirements must contain only letters",
 						"Name error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;

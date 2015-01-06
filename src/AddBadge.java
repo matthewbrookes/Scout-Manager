@@ -236,6 +236,14 @@ public class AddBadge {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//When button is pressed validate all inputs
+				if(requirement1Field.getText().isEmpty()){
+					//If first requirement is empty show error and quit
+					JOptionPane.showMessageDialog(frame,
+							"Requirement 1 must be entered",
+							"Requirement error",
+							JOptionPane.ERROR_MESSAGE);
+						return;
+				}
 				Validator v = new Validator(frame);
 				if(v.isValidBadgeName(nameField.getText()) &&
 					v.isValidRequirement(requirement1Field.getText()) &&

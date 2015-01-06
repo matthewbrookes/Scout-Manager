@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -345,6 +346,7 @@ public class UpdateBadge {
 		JLabel nameLabel = new JLabel("Name:");
 		final JTextField nameField = new JTextField(40);
 		nameField.setText(badge.getName());
+		nameField.setEditable(false);
 		namePanel.add(nameLabel);
 		namePanel.add(nameField);
 		namePanel.setMaximumSize(new Dimension(800,100));
@@ -447,7 +449,16 @@ public class UpdateBadge {
 		addButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Check fields are all valid
+				//When button is pressed validate all inputs
+				if(requirement1Field.getText().isEmpty()){
+					//If first requirement is empty show error and quit
+					JOptionPane.showMessageDialog(frame,
+							"Requirement 1 must be entered",
+							"Requirement error",
+							JOptionPane.ERROR_MESSAGE);
+						return;
+				}
+				
 				Validator v = new Validator(frame);
 				if(v.isValidBadgeName(nameField.getText()) &&
 					v.isValidRequirement(requirement1Field.getText()) &&
