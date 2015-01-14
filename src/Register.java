@@ -72,7 +72,7 @@ public class Register {
 		//Set purple color to background
 		header.setBackground(new Color(139,0,102)); 
 		//Create home and back buttons
-		ImageIcon back = new ImageIcon("./res/back.png");
+		ImageIcon back = new ImageIcon(ScoutManager.class.getResource("back.png"));
 		JLabel backButton = new JLabel(back);
 		backButton.addMouseListener(new MouseListener(){
 			@Override
@@ -93,7 +93,7 @@ public class Register {
 		});
 		box.add(backButton);
 		
-		ImageIcon home = new ImageIcon("./res/home.png");
+		ImageIcon home = new ImageIcon(ScoutManager.class.getResource("home.png"));
 		JLabel homeButton = new JLabel(home);
 		homeButton.addMouseListener(new MouseListener(){
 			@Override
@@ -122,7 +122,7 @@ public class Register {
 		box.add(title);
 		
 		//Add scout logo
-		ImageIcon scoutLogo = new ImageIcon("./res/scout_logo.png");
+		ImageIcon scoutLogo = new ImageIcon(ScoutManager.class.getResource("scout_logo.png"));
 		JLabel logo = new JLabel(scoutLogo);
 		logo.setHorizontalAlignment(SwingConstants.RIGHT);
 		
@@ -336,7 +336,7 @@ public class Register {
 		printPanel.setBorder(new EmptyBorder(0, 600, 0, 0));
 		
 		//Create a print icon
-		ImageIcon print = new ImageIcon("./res/print.png");
+		ImageIcon print = new ImageIcon(ScoutManager.class.getResource("print.png"));
 		JLabel printButton = new JLabel(print);
 		//If button pressed then print page
 		printButton.addMouseListener(new MouseListener(){

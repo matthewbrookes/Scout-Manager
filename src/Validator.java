@@ -148,7 +148,7 @@ public class Validator {
 					&& !Character.isDigit(c)){
 				JOptionPane.showMessageDialog(frame,
 						"Address must only contain letters and numbers",
-						"Name error",
+						"Address error",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}

@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.URL;
 import java.sql.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -74,7 +75,7 @@ public class ScoutManager {
 	 * If encounters a problem then quits system
 	 * @return Connection The SQLite connection to the database
 	 */
-	public static Connection connectToDB(){
+	static Connection connectToDB(){
 		try {
 		    Class.forName("org.sqlite.JDBC");
 		    Connection db = DriverManager.getConnection("jdbc:sqlite:system.db");
@@ -120,11 +121,11 @@ public class ScoutManager {
 		
 		header.setBackground(new Color(139,0,102)); //Set purple color to background
 		//Create home and back buttons
-		ImageIcon back = new ImageIcon("./res/back.png");
+		ImageIcon back = new ImageIcon(ScoutManager.class.getResource("back.png"));
 		JLabel backButton = new JLabel(back);
 		box.add(backButton);
 		
-		ImageIcon home = new ImageIcon("./res/home.png");
+		ImageIcon home = new ImageIcon(ScoutManager.class.getResource("home.png"));
 		JLabel homeButton = new JLabel(home);
 		homeButton.addMouseListener(new MouseListener(){
 			@Override
@@ -153,7 +154,7 @@ public class ScoutManager {
 		box.add(title);
 		
 		//Add scout logo
-		ImageIcon scoutLogo = new ImageIcon("./res/scout_logo.png");
+		ImageIcon scoutLogo = new ImageIcon(ScoutManager.class.getResource("scout_logo.png"));
 		JLabel logo = new JLabel(scoutLogo);
 		logo.setHorizontalAlignment(SwingConstants.RIGHT);
 		
